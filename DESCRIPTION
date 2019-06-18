@@ -12,6 +12,9 @@ LazyData: true
 RoxygenNote: 6.1.1
 Imports: 
     shiny,
-    shinybones
+    shinybones,
+    shinyWidgets,
+    dplyr,
+    stringr
 Remotes:
     ramnathv/shinybones
