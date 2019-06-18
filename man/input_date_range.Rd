@@ -6,7 +6,7 @@
 \title{Create date range input with preset ranges}
 \usage{
 input_date_range(input, output, session, date_range = c(Sys.Date() - 365,
-  Sys.Date()), date_range_preset = "Last Year", ...)
+  Sys.Date()), selected_date_range_preset = "Last Year", ...)
 
 input_date_range_ui(id, ...)
 }
@@ -17,13 +17,13 @@ input_date_range_ui(id, ...)
 
 \item{session}{standard \code{shiny} boilerplate}
 
-\item{date_range}{selected date range to display}
+\item{date_range}{a range of dates}
 
-\item{date_range_preset}{selected date range preset selected}
+\item{selected_date_range_preset}{selected date range preset}
 
-\item{...}{Additional parameters passed to the module}
+\item{...}{additional parameters passed to the module}
 
-\item{id}{a string indicating the id to use the module with}
+\item{id}{a string indicating the id to call the module with}
 }
 \value{
 A reactive vector of the selected date range
