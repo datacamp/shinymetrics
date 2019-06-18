@@ -14,7 +14,12 @@ Imports:
     shiny,
     shinyWidgets,
     dplyr,
-    stringr
+    stringr,
+    methods,
+    purrr,
+    shinydashboard,
+    magrittr,
+    rlang
 Suggests:
     shinybones
 Remotes:
