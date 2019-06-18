@@ -112,7 +112,6 @@ input_date_range_ui_css <- function(){
 #' This function returns a vector of preset date ranges like Last N Weeks.
 #'
 #' @param max_date The max date for date range to return
-#' @export
 #' @importFrom dplyr case_when
 #' @importFrom stringr str_c
 #' @examples
