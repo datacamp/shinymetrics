@@ -106,3 +106,31 @@ input_date_range_ui_css <- function(){
       }
   '))
 }
+
+#' Date Range Presets
+#'
+#' This function returns a vector of preset date ranges like Last N Weeks.
+#'
+#' @param max_date The max date for date range to return
+#' @export
+#' @importFrom dplyr case_when
+#' @importFrom stringr str_c
+#' @examples
+#' date_range_presets_vec()
+date_range_presets_vec <- function(max_date = NULL){
+  weeks_back <- c(1, 2, 4, 8, 12, 26, 365 / 7, 10*365 / 7)
+  dates <- as.character(Sys.Date() - as.integer(weeks_back*7))
+  weeks_back <- as.integer(weeks_back)
+  names(dates) <- dplyr::case_when(
+    weeks_back == 1 ~ "Last Week",
+    weeks_back <= 12 ~ stringr::str_c("Last ", weeks_back, " Weeks"),
+    weeks_back == 26 ~ "Last 6 Months",
+    weeks_back == 52 ~ "Last Year",
+    weeks_back > 52 ~ "All Time"
+  )
+  if (!is.null(max_date)) {
+    dates <- dates[dates <= max_date]
+  }
+  dates
+}
+
