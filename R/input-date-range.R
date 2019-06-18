@@ -6,10 +6,10 @@
 #' @param input standard \code{shiny} boilerplate
 #' @param output standard \code{shiny} boilerplate
 #' @param session standard \code{shiny} boilerplate
-#' @param id a string indicating the id to use the module with
-#' @param date_range selected date range to display
-#' @param date_range_preset selected date range preset selected
-#' @param ... Additional parameters passed to the module
+#' @param id a string indicating the id to call the module with
+#' @param date_range a range of dates
+#' @param selected_date_range_preset selected date range preset
+#' @param ... additional parameters passed to the module
 #' @examples
 #' library(shiny)
 #' \dontrun{
@@ -35,7 +35,7 @@
 #' @return A reactive vector of the selected date range
 input_date_range <- function(input, output, session,
                              date_range = c(Sys.Date() - 365, Sys.Date()),
-                             date_range_preset = 'Last Year',
+                             selected_date_range_preset = 'Last Year',
                              ...){
   ns <- session$ns
   output$ui_date_range_custom <- shiny::renderUI({
@@ -63,7 +63,7 @@ input_date_range <- function(input, output, session,
     selected_date_range_preset <- set_selected(
       input$date_range_preset,
       choices_date_range_preset,
-      date_range_presets[get_value(date_range_preset)]
+      date_range_presets[get_value(selected_date_range_preset)]
     )
     shinyWidgets::pickerInput(
       ns("date_range_preset"),
