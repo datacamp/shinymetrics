@@ -22,3 +22,19 @@ set_selected <- function(x, choices, default){
   }
 }
 
+
+# Utility to do map + do.call
+map_call <- function(.x, .f, ...){
+  purrr::map(.x, ~ do.call(.f, .x))
+}
+
+map_call_2 <- function(.x, .f, ...){
+  purrr::map(.x, ~ do_call_2(.f, .x))
+}
+
+# Extend do
+do_call_2 <- function (what, args, ...){
+  args_what <- formalArgs(what)
+  args <- args[names(args) %in% c("", args_what)]
+  do.call(what, args, ...)
+}
