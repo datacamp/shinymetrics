@@ -1,0 +1,9 @@
+Package: shinymetrics
+Title: Shiny Modules to Visualize Tidy Metrics
+Version: 0.0.0.9000
+Authors@R: person("Ramnath", "Vaidyanathan", email = "ramnath.vaidya@gmail.com", role = c("aut", "cre"))
+Description: A collection of shiny modules to visualize tidy metrics.
+Depends: R (>= 3.6.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
