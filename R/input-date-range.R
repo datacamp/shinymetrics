@@ -114,8 +114,6 @@ input_date_range_ui_css <- function(){
 #' @param max_date The max date for date range to return
 #' @importFrom dplyr case_when
 #' @importFrom stringr str_c
-#' @examples
-#' date_range_presets_vec()
 date_range_presets_vec <- function(max_date = NULL){
   weeks_back <- c(1, 2, 4, 8, 12, 26, 365 / 7, 10*365 / 7)
   dates <- as.character(Sys.Date() - as.integer(weeks_back*7))

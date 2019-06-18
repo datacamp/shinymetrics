@@ -12,6 +12,3 @@ date_range_presets_vec(max_date = NULL)
 \description{
 This function returns a vector of preset date ranges like Last N Weeks.
 }
-\examples{
-date_range_presets_vec()
-}
