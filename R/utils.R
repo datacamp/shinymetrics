@@ -2,6 +2,8 @@
 #'
 #' @param x an object whose value is to be retrieved
 #' @param ... additional parameters passed on to the method.
+#' @importFrom methods formalArgs
+#' @importFrom purrr map
 get_value <- function(x, ...){
   UseMethod('get_value', x)
 }
@@ -34,7 +36,7 @@ map_call_2 <- function(.x, .f, ...){
 
 # Extend do
 do_call_2 <- function (what, args, ...){
-  args_what <- formalArgs(what)
+  args_what <- methods::formalArgs(what)
   args <- args[names(args) %in% c("", args_what)]
   do.call(what, args, ...)
 }
