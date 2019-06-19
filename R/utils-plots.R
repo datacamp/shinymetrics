@@ -148,3 +148,21 @@ get_yaxis_opts <- function(metric, show_pct = FALSE){
   # o$nticks = 5
   return(o)
 }
+
+expand_metric <- function(metric){
+  metadata <- attr(metric, 'metadata')
+  if (!is.null(metadata)){
+    class(metric) <- class(metric)[class(metric) != "tbl_metric"]
+    c(list(data = metric), metadata)
+  } else {
+    metric
+  }
+}
+
+expand_metrics <- function(metrics){
+  if (!('data' %in% metrics[[1]])){
+    metrics %>%
+      purrr::map(expand_metric)
+  } else
+    metrics
+}
