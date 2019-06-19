@@ -40,3 +40,16 @@ do_call_2 <- function (what, args, ...){
   args <- args[names(args) %in% c("", args_what)]
   do.call(what, args, ...)
 }
+
+# Copied over from tidymetrics
+var_names_dimensions <- function(tbl){
+  set1 <- tbl %>%
+    dplyr::ungroup() %>%
+    dplyr::select_if(~ is.character(.x) || is.factor(.x)) %>%
+    colnames() %>%
+    setdiff(c('date', 'value', 'period', 'metric'))
+
+  set2 <- stringr::str_subset(colnames(tbl), "_id$")
+
+  dplyr::union(set1, set2)
+}
