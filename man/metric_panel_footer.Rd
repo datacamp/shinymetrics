@@ -41,12 +41,9 @@ shinybones::preview_module(metric_panel_footer,
 )
 }
 \dontrun{
-metric_nb_active_users <- dcmetrics::read_metric(
-  'product_engagement_nb_active_users'
-)
 shinybones::preview_module(
   metric_panel_footer,
-  metric = metric_nb_active_users
+  metric = tidymetrics::flights_nyc_avg_arr_delay
 )
 }
 }
