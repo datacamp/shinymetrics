@@ -19,7 +19,11 @@ Imports:
     purrr,
     shinydashboard,
     magrittr,
-    rlang
+    rlang,
+    tidymetrics,
+    plotly,
+    scales,
+    forcats
 Suggests:
     shinybones
 Remotes:
