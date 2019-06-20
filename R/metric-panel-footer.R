@@ -42,10 +42,10 @@ metric_panel_footer <- function(input, output, session,
   metric_filtered <- shiny::reactive({
     date_range <- rv_date_range()
     get_value(metric) %>%
-      dplyr::filter(period == input$period) %>%
+      dplyr::filter(.data$period == input$period) %>%
       dplyr::filter(date >= date_range[1]) %>%
       dplyr::filter(date <= date_range[2]) %>%
-      dplyr::select(-period)
+      dplyr::select(-.data$period)
       dplyr::arrange(date)
   })
 
