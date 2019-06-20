@@ -11,6 +11,7 @@
 #' metrics_condensed$finance_churn_pct_b2c_churn %>%
 #'   get_dimension_tabs()
 #' }
+#' @importFrom humanize natural_time
 get_dimension_tabs <- function(metric, hidden_dimensions = NULL){
   metric_expanded <- metric %>%
     get_value() %>%
@@ -64,5 +65,39 @@ append_dimension_all <- function(x){
     ))
   } else {
     x
+  }
+}
+
+show_as_tags <- function(x){
+  if (is.null(x)) return(shiny::span(shiny::HTML("&nbsp;")))
+  x_colors <- custom_palette(length(x))
+  names(x_colors) <- x
+  x %>%
+    purrr::map(~ {
+      shiny::tags$span(.x,
+        class = 'label',
+        style = sprintf('background-color:%s', x_colors[.x])
+      )
+    }) %>%
+    shiny::tagList()
+}
+
+
+text_updated_at <- function(updated_at){
+  if (is.null(updated_at)){
+    updated_at <- 'Last updated: Unknown'
+    return(shiny::tags$small(class = 'text-danger', updated_at))
+  }
+  time_elapsed = as.numeric(
+    difftime(Sys.time(), updated_at, units = 'hours')
+  )
+  updated_at <- humanize::natural_time(updated_at)
+  updated_at <- paste('Last updated:', updated_at)
+  if (time_elapsed >= 48){
+    shiny::tags$small(class = 'text-danger', updated_at)
+  } else if (time_elapsed >= 24){
+    shiny::tags$small(class = 'text-warning', updated_at)
+  } else {
+    shiny::tags$small(updated_at)
   }
 }
