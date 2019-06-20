@@ -23,7 +23,12 @@ Imports:
     tidymetrics,
     plotly,
     scales,
-    forcats
+    forcats,
+    humanize,
+    bsplus,
+    commonmark,
+    htmltools,
+    shinycssloaders
 Suggests:
     shinybones
 Remotes:
