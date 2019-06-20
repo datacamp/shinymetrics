@@ -24,6 +24,7 @@
 #' }
 #' @param metric a \code{tbl_metric} object
 #' @param ... additional parameters passed to \code{metric_panel}
+#' @export
 preview_metric <- function(metric, ...){
   shinybones::preview_module('metric_panel', metric = metric, ...)
 }
