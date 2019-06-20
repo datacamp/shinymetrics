@@ -56,7 +56,7 @@ metric_panel <- function(input, output, session,
     tidymetrics::discard_constant_dimensions, metric
   )(metric)
 
-  rv_metric_filtered <- callModule(metric_panel_footer, 'metric_filtered',
+  rv_metric_filtered <- shiny::callModule(metric_panel_footer, 'metric_filtered',
     metric = metric,
     date_range = c(Sys.Date() - 365, Sys.Date()),
     selected_date_range_preset = selected_date_range_preset,
@@ -91,8 +91,8 @@ metric_panel <- function(input, output, session,
         ns('metric_filtered'),
         selected_period = selected_period,
         periods = metric %>%
-          dplyr::distinct(period) %>%
-          dplyr::pull(period)
+          dplyr::distinct(.data$period) %>%
+          dplyr::pull(.data$period)
       ))
     )
   })
