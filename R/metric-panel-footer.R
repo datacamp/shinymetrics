@@ -63,6 +63,7 @@ metric_panel_footer <- function(input, output, session,
       )
     }
   )
+  return(metric_filtered)
 }
 
 #' @rdname metric_panel_footer
