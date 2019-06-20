@@ -21,11 +21,12 @@ input_select_period <- function(inputId,
                                 label = 'aggregated_by',
                                 select_func = shiny::selectInput,
                                 ...){
+  choices <- period_presets_vec(get_value(periods))
   select_func(
     inputId,
     label = label,
-    choices = period_presets_vec(get_value(periods)),
-    selected = selected_period,
+    choices = period_presets_vec(choices),
+    selected = choices[selected_period],
     ...
   )
 }
@@ -37,7 +38,7 @@ period_presets_vec <- function(periods = "All"){
     "Rolling 7 Day" = 'rolling_7d', "Rolling 28 Day" = "rolling_28d",
     "Rolling 56 Day" = "rolling_56d"
   )
-  if (periods == 'All'){
+  if (length(periods) == 1 && periods == 'All'){
     periods_all
   } else {
     periods_all[periods_all %in% periods]
