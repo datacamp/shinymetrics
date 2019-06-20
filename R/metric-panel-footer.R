@@ -24,14 +24,13 @@
 #' @importFrom rlang .data
 #' @examples
 #' \dontrun{
-#' shinybones::preview_module(
-#'   metric_panel_footer,
-#'   metric = tidymetrics::flights_nyc_avg_arr_delay
-#' )
+#' library(dplyr)
+#' metrics <- datacampr::dc_s3_read('metrics_condensed.rds')$metrics_condensed
+#' preview_metric(metrics$content_courses_avg_rating_wtd)
 #' }
 metric_panel_footer <- function(input, output, session,
                                 metric,
-                                date_range = c(Sys.Date() - 365, Sys.Date()),
+                                date_range = range(metric$date),
                                 selected_date_range_preset = 'Last Year',
                                 ...){
   ns <- session$ns
@@ -42,12 +41,17 @@ metric_panel_footer <- function(input, output, session,
 
   metric_filtered <- shiny::reactive({
     date_range <- rv_date_range()
-    get_value(metric) %>%
-      dplyr::filter(.data$period == input$period) %>%
+    print(date_range[1])
+    print(date_range[2])
+    m <- metric %>%
+      dplyr::filter(period == input$period) %>%
       dplyr::filter(date >= date_range[1]) %>%
       dplyr::filter(date <= date_range[2]) %>%
-      dplyr::select(-.data$period) %>%
+      dplyr::select(-period)
       dplyr::arrange(date)
+    print('Printing m')
+    print(m)
+    return(m)
   })
 
   shiny::callModule(download_csv, 'download_data',
@@ -67,7 +71,9 @@ metric_panel_footer <- function(input, output, session,
 }
 
 #' @rdname metric_panel_footer
-metric_panel_footer_ui <- function(id, selected_period = NULL, ...){
+metric_panel_footer_ui <- function(id, selected_period = NULL, periods, ...){
+  print("Selected period is: ")
+  print(selected_period)
   ns <- shiny::NS(id)
   download_csv_ui_right <- function(...){
     shiny::tags$div(
@@ -85,7 +91,8 @@ metric_panel_footer_ui <- function(id, selected_period = NULL, ...){
       # Period Picker ----
       shiny::column(3, input_select_period(
         ns('period'),
-        selected_period = selected_period
+        selected_period = selected_period,
+        periods = periods
       )),
       # Date Range Selector ----
       shiny::column(5, shiny::fluidRow(
