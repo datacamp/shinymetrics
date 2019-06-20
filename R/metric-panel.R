@@ -31,11 +31,13 @@
 #' metric <- metrics_condensed$finance_forecasts_usd_arr_total %>%
 #'   filter(period == 'week')
 #' shinybones::preview_module(metric_panel, metric = metric, plot_type = 'line')
-#' metric <- metrics_condensed$finance_cash_usd_cash_in %>%
-#'   filter(period == 'month')
-#' shinybones::preview_module(met)
+
+#' preview_metric(metrics_condensed$finance_cash_usd_cash_in)
+#' preview_metric(flights_nyc_avg_arr_delay)
 #' }
 #' @importFrom shinycssloaders withSpinner
+#' @importFrom tidymetrics discard_constant_dimensions
+#' @export
 metric_panel <- function(input, output, session,
                          metric,
                          plot_type = NULL,
@@ -51,8 +53,15 @@ metric_panel <- function(input, output, session,
 
   ns = session$ns
   metric <- purrr::possibly(
-    tidymetrics::remove_constant_dimensions, metric
+    tidymetrics::discard_constant_dimensions, metric
   )(metric)
+
+  rv_metric_filtered <- callModule(metric_panel_footer, 'metric_filtered',
+    metric = metric,
+    date_range = c(Sys.Date() - 365, Sys.Date()),
+    selected_date_range_preset = selected_date_range_preset,
+    selected_period = selected_period
+  )
 
   if (is.null(div_bottom_left)){
     div_bottom_left <- show_as_tags(attr(metric, 'metadata')$dimensions_filters)
@@ -64,7 +73,7 @@ metric_panel <- function(input, output, session,
     lapply(function(x){
       output[[paste0('plot_', x$name)]] <- plotly::renderPlotly({
         plot_metric_condensed(
-          metric = get_value(metric),
+          metric = rv_metric_filtered(),
           plot_type = plot_type,
           dimension = x$name
         )
@@ -78,7 +87,13 @@ metric_panel <- function(input, output, session,
     )
     tagList(
       div(class = 'col-sm-12', style = 'margin-bottom:15px', tab_box),
-      div(class = 'col-sm-12', metric_panel_footer_ui('metric_filtered'))
+      div(class = 'col-sm-12', metric_panel_footer_ui(
+        ns('metric_filtered'),
+        selected_period = selected_period,
+        periods = metric %>%
+          dplyr::distinct(period) %>%
+          dplyr::pull(period)
+      ))
     )
   })
 }
