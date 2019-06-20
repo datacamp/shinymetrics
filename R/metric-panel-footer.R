@@ -41,17 +41,12 @@ metric_panel_footer <- function(input, output, session,
 
   metric_filtered <- shiny::reactive({
     date_range <- rv_date_range()
-    print(date_range[1])
-    print(date_range[2])
-    m <- metric %>%
+    get_value(metric) %>%
       dplyr::filter(period == input$period) %>%
       dplyr::filter(date >= date_range[1]) %>%
       dplyr::filter(date <= date_range[2]) %>%
       dplyr::select(-period)
       dplyr::arrange(date)
-    print('Printing m')
-    print(m)
-    return(m)
   })
 
   shiny::callModule(download_csv, 'download_data',
@@ -72,8 +67,6 @@ metric_panel_footer <- function(input, output, session,
 
 #' @rdname metric_panel_footer
 metric_panel_footer_ui <- function(id, selected_period = NULL, periods, ...){
-  print("Selected period is: ")
-  print(selected_period)
   ns <- shiny::NS(id)
   download_csv_ui_right <- function(...){
     shiny::tags$div(
