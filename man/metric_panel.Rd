@@ -61,8 +61,7 @@ metrics_condensed <- datacampr::dc_s3_read(
 metric <- metrics_condensed$finance_forecasts_usd_arr_total \%>\%
   filter(period == 'week')
 shinybones::preview_module(metric_panel, metric = metric, plot_type = 'line')
-metric <- metrics_condensed$finance_cash_usd_cash_in \%>\%
-  filter(period == 'month')
-shinybones::preview_module(met)
+preview_metric(metrics_condensed$finance_cash_usd_cash_in)
+preview_metric(flights_nyc_avg_arr_delay)
 }
 }

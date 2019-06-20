@@ -6,10 +6,10 @@
 \title{Metric Panel Footer}
 \usage{
 metric_panel_footer(input, output, session, metric,
-  date_range = c(Sys.Date() - 365, Sys.Date()),
+  date_range = range(metric$date),
   selected_date_range_preset = "Last Year", ...)
 
-metric_panel_footer_ui(id, selected_period = NULL, ...)
+metric_panel_footer_ui(id, selected_period = NULL, periods, ...)
 }
 \arguments{
 \item{input}{standard \code{shiny} boilerplate}
@@ -29,6 +29,8 @@ metric_panel_footer_ui(id, selected_period = NULL, ...)
 \item{id}{a string indicating the id to call the module with}
 
 \item{selected_period}{a string indicating selected period}
+
+\item{periods}{a named vector of periods.}
 }
 \description{
 This is a component module to ...
@@ -41,9 +43,8 @@ shinybones::preview_module(metric_panel_footer,
 )
 }
 \dontrun{
-shinybones::preview_module(
-  metric_panel_footer,
-  metric = tidymetrics::flights_nyc_avg_arr_delay
-)
+library(dplyr)
+metrics <- datacampr::dc_s3_read('metrics_condensed.rds')$metrics_condensed
+preview_metric(metrics$content_courses_avg_rating_wtd)
 }
 }
