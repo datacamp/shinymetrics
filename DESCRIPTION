@@ -32,5 +32,5 @@ Imports:
 Suggests:
     shinybones
 Remotes:
-    ramnathv/shinybones
+    ramnathv/shinybones,
     ramnathv/tidymetrics
