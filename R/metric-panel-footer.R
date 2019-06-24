@@ -45,12 +45,17 @@ metric_panel_footer <- function(input, output, session,
       dplyr::filter(.data$period == input$period) %>%
       dplyr::filter(date >= date_range[1]) %>%
       dplyr::filter(date <= date_range[2]) %>%
-      dplyr::select(-.data$period)
       dplyr::arrange(date)
   })
 
+  metric_download <- shiny::reactive({
+    metric_filtered() %>%
+      dplyr::select(-.data$period) %>%
+      dplyr::as_tibble()
+  })
+
   shiny::callModule(download_csv, 'download_data',
-    dataset = metric_filtered,
+    dataset = metric_download,
     filename = function(){
       paste0(
         gsub("_", "-", attr(metric, 'metadata')$metric_full),
