@@ -25,7 +25,7 @@ input_select_period <- function(inputId,
   select_func(
     inputId,
     label = label,
-    choices = period_presets_vec(choices),
+    choices = choices,
     selected = choices[selected_period],
     ...
   )
