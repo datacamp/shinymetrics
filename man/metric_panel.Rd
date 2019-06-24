@@ -55,13 +55,13 @@ Display a metric in a panel
 \examples{
 library(dplyr)
 \dontrun{
-metrics_condensed <- datacampr::dc_s3_read(
-  "metrics_condensed.rds"
-)$metrics_condensed
-metric <- metrics_condensed$finance_forecasts_usd_arr_total \%>\%
-  filter(period == 'week')
-shinybones::preview_module(metric_panel, metric = metric, plot_type = 'line')
-preview_metric(metrics_condensed$finance_cash_usd_cash_in)
-preview_metric(flights_nyc_avg_arr_delay)
+ metrics_condensed <- datacampr::dc_s3_read(
+   "metrics_condensed.rds"
+ )$metrics_condensed
+ preview_metric(
+   metric = metrics_condensed$finance_forecasts_usd_arr_total,
+   plot_type = 'line'
+ )
+ preview_metric(metrics_condensed$finance_cash_usd_cash_in)
 }
 }
