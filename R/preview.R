@@ -10,7 +10,7 @@
 #'  metric_rating <- datacampr::tbl_metric_content_courses_avg_rating_wtd()
 #'  preview_metric(metric_rating, selected_period = 'Rolling 28 Day')
 #'  preview_metric(
-#'    metric %>%
+#'    metric_rating %>%
 #'      filter(launch_status == "live") %>%
 #'      filter(technology == "R"),
 #'    selected_period = 'Rolling 28 Day'
