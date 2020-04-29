@@ -35,6 +35,7 @@ period_presets_vec <- function(periods = "All"){
   periods_all <-   c(
     "Day" = "day", "Week" = "week",
     "Month" = "month", "Quarter" = "quarter",
+    "Year" = "year",
     "Rolling 7 Day" = 'rolling_7d', "Rolling 28 Day" = "rolling_28d",
     "Rolling 56 Day" = "rolling_56d"
   )
