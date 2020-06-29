@@ -27,7 +27,8 @@ get_dimension_tabs <- function(metric, hidden_dimensions = NULL){
   d <- dimensions %>%
     rev() %>%
     purrr::map(~ {
-      .x$title <- dplyr::coalesce(.x$title, .x$metric)
+       # BUG: Figure out what I was trying to do here
+       # .x$title <- dplyr::coalesce(.x$title, .x$metric)
       .x$description <- dplyr::coalesce(.x$description, .x$title)
       .x
     }) %>%
